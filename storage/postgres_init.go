@@ -1,15 +1,19 @@
 package storage
 
 import (
+	"log"
+
 	"github.com/jmoiron/sqlx"
 )
 
-type DB struct {
-	db *sqlx.DB
-}
+func InitDB() *sqlx.DB {
 
-func InitDB() {
+	db, err := sqlx.Open("postgres", "")
 
-	db, err := sqlx.Open()
+	if err != nil {
+		log.Fatal("Can't connect to DB!")
+	}
+
+	return db
 
 }
