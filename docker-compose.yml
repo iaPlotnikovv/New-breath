@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:   
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    hostname: postgres
+    volumes:
+      - ./pkg/migrations/1_init.up.sql:/docker-entrypoint-initdb.d/1_init.up.sql
+    environment:
+      POSTGRES_USER : postgres
+      POSTGRES_PASSWORD : test
+      POSTGRES_DB : mydb
+  api:
+    build: .
+    ports:
+      - 80:8080
+    depends_on:
+      - db  
